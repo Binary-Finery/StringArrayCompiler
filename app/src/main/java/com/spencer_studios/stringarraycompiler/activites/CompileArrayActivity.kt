@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.spencer_studios.stringarraycompiler.R
 import com.spencer_studios.stringarraycompiler.utilities.DBUtils
+import com.spencer_studios.stringarraycompiler.utilities.msg
 import com.spencer_studios.stringarraycompiler.utilities.shareArray
 import kotlinx.android.synthetic.main.content_compile_array.*
 import java.io.File
@@ -87,7 +87,7 @@ class CompileArrayActivity : AppCompatActivity() {
             fileName.writeText(textViewCompiledArray.text.toString().trim())
             savedDialog(fileName)
         } catch (e: Exception) {
-            Toast.makeText(this, "unable to save\n${e.message}", Toast.LENGTH_LONG).show()
+            msg(this, "unable to save")
         }
     }
 
@@ -113,7 +113,7 @@ class CompileArrayActivity : AppCompatActivity() {
                 if (DBUtils(this).arraySize() > 0) {
                     setupPermissions()
                 } else {
-                    Toast.makeText(this, "no elements to delete", Toast.LENGTH_LONG).show()
+                    msg(this, "no elements to save")
                 }
                 true
             }
@@ -121,6 +121,8 @@ class CompileArrayActivity : AppCompatActivity() {
                 val content = textViewCompiledArray.text.toString()
                 if (content.isNotEmpty()) {
                     shareArray(this, content)
+                } else {
+                    msg(this, "no elements to share")
                 }
                 true
             }

@@ -1,7 +1,6 @@
 package com.spencer_studios.stringarraycompiler.utilities
 
 import android.content.Context
-import android.widget.Toast
 import spencerstudios.com.jetdblib.JetDB
 
 class DBUtils(private val ctx: Context) {
@@ -12,7 +11,7 @@ class DBUtils(private val ctx: Context) {
         val elements = getAllElements()
         elements.add(text)
         saveElements(elements)
-        Toast.makeText(ctx, "element saved", Toast.LENGTH_LONG).show()
+        msg(ctx, "element saved")
         return arraySize()
     }
 
@@ -38,7 +37,7 @@ class DBUtils(private val ctx: Context) {
         val elements = getAllElements()
         elements[idx] = text
         saveElements(elements)
-        Toast.makeText(ctx, "element updated", Toast.LENGTH_LONG).show()
+        msg(ctx, "element updated")
     }
 
     fun deleteAllElements(){
