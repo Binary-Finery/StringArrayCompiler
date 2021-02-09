@@ -11,8 +11,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.spencer_studios.stringarraycompiler.utilities.DBUtils
 import com.spencer_studios.stringarraycompiler.R
+import com.spencer_studios.stringarraycompiler.utilities.DBUtils
+import com.spencer_studios.stringarraycompiler.utilities.shareArray
 import kotlinx.android.synthetic.main.content_compile_array.*
 import java.io.File
 import java.text.DateFormat
@@ -70,9 +71,7 @@ class CompileArrayActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         when (requestCode) {
             permissionRequestCode -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -85,7 +84,7 @@ class CompileArrayActivity : AppCompatActivity() {
         try {
             val name = "array_${DateFormat.getDateTimeInstance().format(System.currentTimeMillis()).replace(" ","_")}.txt"
             val fileName = File(getExternalFilesDir("compiled_array"), name)
-            fileName.writeText(textViewCompiledArray.text.toString())
+            fileName.writeText(textViewCompiledArray.text.toString().trim())
             savedDialog(fileName)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -111,10 +110,17 @@ class CompileArrayActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
-                if(DBUtils(this).arraySize() > 0) {
+                if (DBUtils(this).arraySize() > 0) {
                     setupPermissions()
-                }else{
+                } else {
                     Toast.makeText(this, "no elements to delete", Toast.LENGTH_LONG).show()
+                }
+                true
+            }
+            R.id.action_share -> {
+                val content = textViewCompiledArray.text.toString()
+                if (content.isNotEmpty()) {
+                    shareArray(this, content)
                 }
                 true
             }
