@@ -87,7 +87,7 @@ class CompileArrayActivity : AppCompatActivity() {
             fileName.writeText(textViewCompiledArray.text.toString().trim())
             savedDialog(fileName)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Toast.makeText(this, "unable to save\n${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 
