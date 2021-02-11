@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.spencer_studios.stringarraycompiler.R
@@ -15,6 +16,7 @@ import com.spencer_studios.stringarraycompiler.utilities.DBUtils
 import com.spencer_studios.stringarraycompiler.utilities.msg
 import com.spencer_studios.stringarraycompiler.utilities.shareArray
 import kotlinx.android.synthetic.main.content_compile_array.*
+import spencerstudios.com.jetdblib.JetDB
 import java.io.File
 import java.text.DateFormat
 
@@ -24,6 +26,15 @@ class CompileArrayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(
+            if (JetDB.getBoolean(
+                    this,
+                    "dark_mode",
+                    false
+                )
+            ) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
+
         setContentView(R.layout.activity_compile_array)
         setSupportActionBar(findViewById(R.id.toolbar))
 

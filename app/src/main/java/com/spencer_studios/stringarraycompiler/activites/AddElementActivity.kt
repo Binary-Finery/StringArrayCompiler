@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.spencer_studios.stringarraycompiler.utilities.DBUtils
+import androidx.appcompat.app.AppCompatDelegate
 import com.spencer_studios.stringarraycompiler.R
+import com.spencer_studios.stringarraycompiler.utilities.DBUtils
 import kotlinx.android.synthetic.main.content_main.*
+import spencerstudios.com.jetdblib.JetDB
 
 class AddElementActivity : AppCompatActivity(){
 
@@ -16,13 +18,22 @@ class AddElementActivity : AppCompatActivity(){
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (JetDB.getBoolean(
+                    this,
+                    "dark_mode",
+                    false
+                )
+            ) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         mode = intent.getIntExtra("mode", addElement)
 
-        if(mode != addElement) {
+        if (mode != addElement) {
             index = intent.getIntExtra("element_index", 0)
             val element = DBUtils(
                 this

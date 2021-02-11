@@ -19,7 +19,7 @@ class DBUtils(private val ctx: Context) {
         return getAllElements().size
     }
 
-    private fun saveElements(elements: ArrayList<String>) {
+    fun saveElements(elements: ArrayList<String>) {
         JetDB.putStringList(ctx, elements, key)
     }
 

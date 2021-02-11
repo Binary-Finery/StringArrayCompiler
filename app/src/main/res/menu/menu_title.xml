@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.spencer_studios.stringarraycompiler.activites.TitleActivity">
+    <item
+        android:id="@+id/action_theme"
+        android:orderInCategory="100"
+        android:title="switch theme"
+        app:showAsAction="never"
+        tools:ignore="AlwaysShowAction,HardcodedText" />
+
+</menu>
