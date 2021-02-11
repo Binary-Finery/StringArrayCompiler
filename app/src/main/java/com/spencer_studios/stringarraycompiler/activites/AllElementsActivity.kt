@@ -50,9 +50,11 @@ class AllElementsActivity : AppCompatActivity(),
         }
 
         val db = DBUtils(this)
-        supportActionBar?.title = "All Elements [${db.arraySize()}]"
+
+        setToolbarValue(db.arraySize())
 
         elements = db.getAllElements()
+
         elementsAdapter =
             ElementsAdapter(
                 elements,
@@ -115,7 +117,6 @@ class AllElementsActivity : AppCompatActivity(),
                 }
             }).attachToRecyclerView(rv)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_lsit_elements, menu)
