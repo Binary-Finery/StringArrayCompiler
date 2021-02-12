@@ -48,13 +48,37 @@ class CompileArrayActivity : AppCompatActivity() {
         ).getAllElements()
 
         if (elements.isNotEmpty()) {
+            var startBracket = ""
+            var endBracket = ""
+            when (JetDB.getInt(this, "bracket", 0)) {
+                0 -> {
+                    startBracket = "[\n"
+                    endBracket = "\n]"
+                }
+                1 -> {
+                    startBracket = "{\n"
+                    endBracket = "\n}"
+                }
+                2 -> {
+                    startBracket = "(\n"
+                    endBracket = "\n)"
+                }
+                3 -> {
+                    startBracket = "<\n"
+                    endBracket = "\n>"
+                }
+                4 -> {
+                    startBracket = ""
+                    endBracket = ""
+                }
+            }
             val builder = StringBuilder()
-            builder.append("[\n")
+            builder.append(startBracket)
             elements.forEach {
                 builder.append("\"${it.replace("\"", "\\\"")}\",\n")
             }
             builder.setLength(builder.length - 2)
-            builder.append("\n]")
+            builder.append(endBracket)
             textViewCompiledArray.text = "$builder"
         }
     }
@@ -93,7 +117,8 @@ class CompileArrayActivity : AppCompatActivity() {
 
     private fun write() {
         try {
-            val name = "array_${DateFormat.getDateTimeInstance().format(System.currentTimeMillis()).replace(" ","_")}.txt"
+            val name = "array_${DateFormat.getDateTimeInstance().format(System.currentTimeMillis())
+                .replace(" ", "_")}.txt"
             val fileName = File(getExternalFilesDir("compiled_array"), name)
             fileName.writeText(textViewCompiledArray.text.toString().trim())
             savedDialog(fileName)

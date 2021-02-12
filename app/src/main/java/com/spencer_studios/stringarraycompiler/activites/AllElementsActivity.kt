@@ -113,7 +113,7 @@ class AllElementsActivity : AppCompatActivity(),
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    // unused method...
+                    /*unused method*/
                 }
             }).attachToRecyclerView(rv)
     }
@@ -140,15 +140,17 @@ class AllElementsActivity : AppCompatActivity(),
     private fun confirmDeleteDialog() {
         AlertDialog.Builder(this).apply {
             setTitle("Delete All Elements")
-            setMessage("delete all elements, are you sure?")
+            setMessage("delete all elements, are you sure? this action cannot be undone")
             setPositiveButton("yes") { d, _ ->
                 DBUtils(this@AllElementsActivity)
                     .deleteAllElements()
                 elements.clear()
                 elementsAdapter.notifyDataSetChanged()
-                supportActionBar?.title = "All Elements [${DBUtils(
-                    this@AllElementsActivity
-                ).arraySize()}]"
+                setToolbarValue(
+                    DBUtils(
+                        this@AllElementsActivity
+                    ).arraySize()
+                )
                 d.dismiss()
             }
             setNegativeButton("cancel") { d, _ ->

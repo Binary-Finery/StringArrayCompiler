@@ -1,10 +1,12 @@
 package com.spencer_studios.stringarraycompiler.activites
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.spencer_studios.stringarraycompiler.R
@@ -64,7 +66,28 @@ class TitleActivity : AppCompatActivity() {
                 recreate()
                 true
             }
+            R.id.action_bracket_style -> {
+                bracketSelectorDialog()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun bracketSelectorDialog() {
+
+        val brackets = arrayOf("[ ... ]", "{ ... }", "( ... )", "< ... >", "none")
+        val bracketIdx = JetDB.getInt(this, "bracket", 0)
+
+        AlertDialog.Builder(this).apply {
+            setTitle("Bracket Style For Compiled Array")
+            setSingleChoiceItems(brackets, bracketIdx) { _: DialogInterface, i: Int ->
+                JetDB.putInt(this@TitleActivity, i, "bracket")
+            }
+            setPositiveButton("okay") { d, _ ->
+                d.dismiss()
+            }
+            show()
         }
     }
 }

@@ -9,4 +9,11 @@
         app:showAsAction="never"
         tools:ignore="AlwaysShowAction,HardcodedText" />
 
+    <item
+        android:id="@+id/action_bracket_style"
+        android:orderInCategory="100"
+        android:title="bracket style"
+        app:showAsAction="never"
+        tools:ignore="AlwaysShowAction,HardcodedText" />
+
 </menu>
